@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #e5f5f8;
+  color: #33475b;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  line-height: 1.75em;
+}

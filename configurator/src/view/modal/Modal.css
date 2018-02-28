@@ -1,0 +1,23 @@
+.ModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.ModalContents {
+  position: fixed;
+  top: 10%;
+  left: 12.5%;
+  right: 12.5%;
+  bottom: 10%;
+  z-index: 1001;
+  background: #e5f5f8;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #0091ae;
+  overflow: auto;
+}

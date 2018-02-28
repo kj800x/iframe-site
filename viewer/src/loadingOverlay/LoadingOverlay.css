@@ -1,0 +1,23 @@
+.loading-overlay {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  z-index: 100;
+}
+
+.loading-overlay > div {
+  text-align: center;
+  line-height: 200%;
+  font-size: xx-large;
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px 50px;
+  border-radius: 20px;
+}

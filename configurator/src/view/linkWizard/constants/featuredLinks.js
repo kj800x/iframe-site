@@ -8,7 +8,7 @@ export default [
     "link": "https://www.youtube.com/embed/Ldq1KXcIE1c?autoplay=1&mute=1"
   },
   {
-    "name": "Tire Swing Panda",
+    "name": "Tire Swing (Buffering) Panda",
     "link": "https://www.youtube.com/embed/tio13lc4Bx8?autoplay=1&mute=1"
   },
   {

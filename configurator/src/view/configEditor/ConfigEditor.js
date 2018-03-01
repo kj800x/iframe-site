@@ -37,28 +37,30 @@ export default class ConfigEditor extends Component {
   render() {
     return (
       <div>
-        <h1> IFrame Site Configurator </h1>
-        <LinkEditor
-          label={"Top Left"}
-          value={this.state.config.tl}
-          onChange={this.createLinkUpdater("tl")}
-        />
-        <LinkEditor
-          label={"Top Right"}
-          value={this.state.config.tr}
-          onChange={this.createLinkUpdater("tr")}
-        />
-        <LinkEditor
-          label={"Bottom Left"}
-          value={this.state.config.bl}
-          onChange={this.createLinkUpdater("bl")}
-        />
-        <LinkEditor
-          label={"Bottom Right"}
-          value={this.state.config.br}
-          onChange={this.createLinkUpdater("br")}
-        />
-        <button onClick={this.handleUpdate}>Update</button>
+        <h4> Hello {this.props.displayName} </h4>
+        <table className="LinkEditorTable">
+          <LinkEditor
+            label={"Top Left"}
+            value={this.state.config.tl}
+            onChange={this.createLinkUpdater("tl")}
+          />
+          <LinkEditor
+            label={"Top Right"}
+            value={this.state.config.tr}
+            onChange={this.createLinkUpdater("tr")}
+          />
+          <LinkEditor
+            label={"Bottom Left"}
+            value={this.state.config.bl}
+            onChange={this.createLinkUpdater("bl")}
+          />
+          <LinkEditor
+            label={"Bottom Right"}
+            value={this.state.config.br}
+            onChange={this.createLinkUpdater("br")}
+          />
+        </table>
+        <button className="updateButton" onClick={this.handleUpdate}>Update</button>
       </div>
     );
   }

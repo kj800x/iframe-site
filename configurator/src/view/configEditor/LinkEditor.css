@@ -1,3 +1,19 @@
-.LinkEditor > input, .LinkEditor > button {
-  margin-left: 8px;
+.LinkEditorTable td.quadrant {
+  text-align: right;
+}
+
+.LinkEditorTable td.wizard {
+  text-align: left;
+}
+
+.LinkEditorTable td.quadrant,
+.LinkEditorTable td.wizard {
+  width: 150px;
+}
+
+
+
+.LinkEditorTable input.link {
+  width: 300px;
+  margin: 0 5px;
 }

@@ -1,10 +1,13 @@
 import JoinRoomMessage from "./messages/JoinRoomMessage"
 import SetRoomConfigMessage from "./messages/SetRoomConfigMessage"
-import {CONFIG_CHANGE} from "./constants/MessageTypes";
+import AuthenticateMessage from "./messages/AuthenticateMessage";
+import {CONFIG_CHANGE, AUTH_CHANGE} from "./constants/MessageTypes";
 
 export default class WebsocketConnection {
   constructor() {
     this.configChangeListeners = [];
+    this.authChangeListeners = [];
+    this.auth = this.auth.bind(this);
   }
 
   connect(host, port, room) {
@@ -27,16 +30,28 @@ export default class WebsocketConnection {
 
   onMessage(rawMessage) {
     const message = JSON.parse(rawMessage.data);
-    console.log(message);
     if (message.type === CONFIG_CHANGE) {
       for (let i = 0; i < this.configChangeListeners.length; i++) {
-        this.configChangeListeners[i](message.config);
+        this.configChangeListeners[i](message.config, message.who, message.ownFeedback);
+      }
+    }
+    if (message.type === AUTH_CHANGE) {
+      for (let i = 0; i < this.authChangeListeners.length; i++) {
+        this.authChangeListeners[i](message);
       }
     }
   }
 
   setConfig(config) {
     this.ws.send(JSON.stringify(SetRoomConfigMessage(config)));
+  }
+
+  auth(token) {
+    this.ws.send(JSON.stringify(AuthenticateMessage(token)))
+  }
+
+  onAuthChange(handler) {
+    this.authChangeListeners.push(handler);
   }
 
   onConfigChange(handler) {

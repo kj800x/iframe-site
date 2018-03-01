@@ -6,6 +6,8 @@ import LoadingOverlay from "./view/loadingOverlay/LoadingOverlay";
 import AlertRoot from "./alerts/view/AlertRoot";
 import AlertStore from "./alerts/AlertStore";
 
+import * as GoogleAuth from "./googleAuth/googleAuth";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +15,7 @@ class App extends Component {
       config: {},
       loadedInitialConfig: false,
     };
+    this.handleAuthChange = this.handleAuthChange.bind(this);
     this.syncConfigFromServer = this.syncConfigFromServer.bind(this);
     this.syncConfigToServer = this.syncConfigToServer.bind(this);
   }
@@ -20,20 +23,57 @@ class App extends Component {
   componentDidMount() {
     this.ws = new WebsocketConnection();
     this.ws.onConfigChange(this.syncConfigFromServer);
+    this.ws.onAuthChange(this.handleAuthChange);
     this.ws.connect(HOST, PORT, DEFAULT_ROOM);
-    window.ws = this.ws; // TODO remove this (it's for debugging only)
+    GoogleAuth.init();
+    GoogleAuth.onGetAuthToken(this.ws.auth)
   }
 
-  syncConfigFromServer(config) {
+  handleAuthChange(message) {
+    this.setState({
+      authStatus: message.authStatus,
+      authDisplayName: message.displayName
+    });
+    if (!message.authStatus) {
+      AlertStore.createAlert(`You signed in as ${message.displayName}, but that user does not have permission to configure this website!`);
+    }
+  }
+
+  syncConfigFromServer(config, whoChanged, isOwnFeedback) {
     this.setState({
       config,
       loadedInitialConfig: true,
     });
-    AlertStore.createAlert("The configuration was just updated by another user. Your changes have been lost. :(");
+    if (!isOwnFeedback) {
+      AlertStore.createAlert(`The configuration was just updated by ${whoChanged}. Your changes have been lost!`);
+    }
   }
 
   syncConfigToServer(config) {
     this.ws.setConfig(config);
+  }
+
+  renderConfigEditor() {
+    if (!this.state.authStatus) {
+      return null;
+    }
+    return (
+      <ConfigEditor
+        config={this.state.config}
+        displayName={this.state.authDisplayName}
+        onConfigChange={this.syncConfigToServer}
+      />
+    )
+  }
+
+  renderLogInButton() {
+    const text = this.state.authStatus ? "Log in as someone else" : "Log In";
+    return (
+      <div>
+        {!this.state.authStatus && <div>Please Sign In</div>}
+        <button onClick={GoogleAuth.signIn}>{text}</button>
+      </div>
+    )
   }
 
   render() {
@@ -44,10 +84,9 @@ class App extends Component {
     return (
       <div>
         <AlertRoot/>
-        <ConfigEditor
-          config={this.state.config}
-          onConfigChange={this.syncConfigToServer}
-        />
+        <h1> IFrame Site Configurator </h1>
+        {this.renderConfigEditor()}
+        {this.renderLogInButton()}
       </div>
     );
   }

@@ -17,6 +17,12 @@ export default class LinkEditor extends Component {
     this.handleWizardDone = this.handleWizardDone.bind(this);
   }
 
+  componentWillReceiveProps() {
+    this.setState({
+      showWizard: false
+    });
+  }
+
   handleInputChange(event) {
     this.props.onChange(event.target.value);
   }
@@ -54,14 +60,13 @@ export default class LinkEditor extends Component {
 
   render() {
     return (
-      <div>
-        <label className={"LinkEditor"}>
-          {this.props.label}:
-          <input value={this.props.value} onChange={this.handleInputChange}/>
+      <tr>
+        <td className="quadrant"> {this.props.label}:</td>
+        <td><input className="link" value={this.props.value} onChange={this.handleInputChange}/></td>
+        <td className="wizard">
           <button onClick={this.showWizard}>Wizard</button>
-          {this.renderWizardModal()}
-        </label>
-      </div>
+          {this.renderWizardModal()} </td>
+      </tr>
     );
   }
 

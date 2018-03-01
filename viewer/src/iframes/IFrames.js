@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import './IFrames.css';
 
+const DEFAULT_PROFILE = "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50";
+
 function Avatar(props) {
+  const isDefaultProfile = props.subject.picture.includes(DEFAULT_PROFILE);
+
   return (
     <div className="avatar">
-      <img className="profile" src={props.subject.picture}/>
-      <span className="name">{props.subject.name}</span>
+      {!isDefaultProfile && <img className="profile" src={props.subject.picture}/>}
+      {isDefaultProfile  && <span className="name">{props.subject.name}</span>}
     </div>
   )
 }

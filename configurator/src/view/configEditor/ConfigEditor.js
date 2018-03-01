@@ -27,7 +27,7 @@ export default class ConfigEditor extends Component {
   createLinkUpdater(part) {
     return (value) => {
       const newConfig = Object.assign({}, this.state.config);
-      newConfig[part] = value;
+      newConfig[part].link = value;
       this.setState({
         config: newConfig,
       })
@@ -41,22 +41,22 @@ export default class ConfigEditor extends Component {
         <table className="LinkEditorTable">
           <LinkEditor
             label={"Top Left"}
-            value={this.state.config.tl}
+            value={this.state.config.tl.link}
             onChange={this.createLinkUpdater("tl")}
           />
           <LinkEditor
             label={"Top Right"}
-            value={this.state.config.tr}
+            value={this.state.config.tr.link}
             onChange={this.createLinkUpdater("tr")}
           />
           <LinkEditor
             label={"Bottom Left"}
-            value={this.state.config.bl}
+            value={this.state.config.bl.link}
             onChange={this.createLinkUpdater("bl")}
           />
           <LinkEditor
             label={"Bottom Right"}
-            value={this.state.config.br}
+            value={this.state.config.br.link}
             onChange={this.createLinkUpdater("br")}
           />
         </table>

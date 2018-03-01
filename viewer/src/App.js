@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 import {HOST, PORT, DEFAULT_ROOM} from "./connection/constants/ConnectionConstants";
 import WebsocketConnection from './connection/WebsocketConnection';

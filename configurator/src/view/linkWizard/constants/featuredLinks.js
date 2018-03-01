@@ -1,5 +1,9 @@
 export default [
   {
+    "name": "Start Page",
+    "link": "http://iframe.coolkev.com/start.html"
+  },
+  {
     "name": "Penguin Beach",
     "link": "https://www.youtube.com/embed/pqDhApnZHFo?autoplay=1&mute=1"
   },
@@ -19,4 +23,8 @@ export default [
     "name": "Tour de France Highlights 2017",
     "link": "https://www.youtube.com/embed/g2WUjUSCv54?version=3&loop=1&playlist=g2WUjUSCv54&autoplay=1&mute=1"
   },
+  {
+    "name": "Fake Paywall",
+    "link": "http://iframe.coolkev.com/paywall.html"
+  }
 ];

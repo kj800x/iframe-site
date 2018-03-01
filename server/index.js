@@ -4,11 +4,19 @@ const request = require('request');
 const JOIN_ROOM = "JOIN_ROOM";
 const SET_ROOM_CONFIG = "SET_ROOM_CONFIG";
 const PORT = 10050;
+const DEFAULT_TARGET = {
+  "link": "",
+  "who": {
+    "name": "SYSTEM",
+    "picture": "http://coolkev.com/images/Logo.png"
+  }
+};
+
 const ROOM_DEFAULT_CONFIG = {
-  "tl": "",
-  "bl": "",
-  "tr": "",
-  "br": ""
+  "tl": DEFAULT_TARGET,
+  "bl": DEFAULT_TARGET,
+  "tr": DEFAULT_TARGET,
+  "br": DEFAULT_TARGET
 };
 
 const idGenerator = (function () {
@@ -101,15 +109,34 @@ function joinRoom(connection, room) {
   log(connection, `Joined room ${room}`);
 }
 
+function updateWhosInConfig(newConfig, oldConfig, who) {
+  const PARTS = ["tl", "tr", "bl", "br"];
+  const out = {};
+  for (let i = 0; i < PARTS.length; i++) {
+    if (newConfig[PARTS[i]].link === oldConfig[PARTS[i]].link) {
+      out[PARTS[i]] = oldConfig[PARTS[i]];
+    } else {
+      out[PARTS[i]] = {
+        "link": newConfig[PARTS[i]].link,
+        "who": {
+          "name": who.displayName,
+          "picture": who.profilePicture,
+        }
+      }
+    }
+  }
+  return out;
+}
+
 function setRoomConfig(room, config, connection) {
   ensureRoom(room);
-  rooms[room].config = config;
+  rooms[room].config = updateWhosInConfig(config, rooms[room].config, connection);
   broadcastToAllInRoom(room, connection, {
     "type": "CONFIG_CHANGE",
-    "config": config,
+    "config": rooms[room].config,
     "who": connection.displayName,
   });
-  log(connection, `Set the room config for room ${room} to ${JSON.stringify(config)}`);
+  log(connection, `Set the room config for room ${room} to ${JSON.stringify(rooms[room].config)}`);
 }
 
 function handleMessage(message, connection) {

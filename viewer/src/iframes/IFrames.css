@@ -1,0 +1,57 @@
+.top {
+  position: fixed;
+  top: 0;
+  bottom: 50%;
+  height: 50%;
+}
+
+.bottom {
+  position: fixed;
+  top: 50%;
+  bottom: 100%;
+  height: 50%;
+}
+
+.left {
+  position: fixed;
+  left: 0;
+  right: 50%;
+  width: 50%;
+}
+
+.right {
+  position: fixed;
+  left: 50%;
+  right: 100%;
+  width: 50%;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 90px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.avatar > .profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  border: 1px solid black;
+  overflow: hidden;
+  background: white;
+}
+
+.avatar > .name {
+  background: #e5f5f8;
+  border: 1px solid #33475b;
+  display: inline-block;
+  border-radius: 7px;
+}

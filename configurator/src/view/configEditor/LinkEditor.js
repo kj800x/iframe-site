@@ -12,6 +12,7 @@ export default class LinkEditor extends Component {
       showWizard: false,
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleFeaturedChange = this.handleFeaturedChange.bind(this);
     this.hideWizard = this.hideWizard.bind(this);
     this.showWizard = this.showWizard.bind(this);
     this.handleWizardDone = this.handleWizardDone.bind(this);
@@ -21,6 +22,10 @@ export default class LinkEditor extends Component {
     this.setState({
       showWizard: false
     });
+  }
+
+  handleFeaturedChange(event) {
+    this.props.onFeaturedChange(event.target.checked);
   }
 
   handleInputChange(event) {
@@ -63,9 +68,13 @@ export default class LinkEditor extends Component {
       <tr>
         <td className="quadrant"> {this.props.label}:</td>
         <td><input className="link" value={this.props.value} onChange={this.handleInputChange}/></td>
+        <td className="featured">
+          <input type="checkbox" checked={this.props.isFeatured} onChange={this.handleFeaturedChange}/>
+        </td>
         <td className="wizard">
           <button onClick={this.showWizard}>Wizard</button>
-          {this.renderWizardModal()} </td>
+          {this.renderWizardModal()}
+        </td>
       </tr>
     );
   }

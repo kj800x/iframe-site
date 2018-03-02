@@ -55,3 +55,14 @@ iframe {
   display: inline-block;
   border-radius: 7px;
 }
+
+.featured {
+  position: fixed;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 1000 !important;
+}

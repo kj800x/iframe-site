@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import WebsocketConnection from './connection/WebsocketConnection';
-import {HOST, PORT, DEFAULT_ROOM} from "./connection/constants/ConnectionConstants";
+import {HOST, PORT, ROOM} from "./connection/constants/ConnectionConstants";
 import ConfigEditor from "./view/configEditor/ConfigEditor";
 import LoadingOverlay from "./view/loadingOverlay/LoadingOverlay";
 import AlertRoot from "./alerts/view/AlertRoot";
@@ -24,7 +24,7 @@ class App extends Component {
     this.ws = new WebsocketConnection();
     this.ws.onConfigChange(this.syncConfigFromServer);
     this.ws.onAuthChange(this.handleAuthChange);
-    this.ws.connect(HOST, PORT, DEFAULT_ROOM);
+    this.ws.connect(HOST, PORT, ROOM);
     GoogleAuth.init();
     GoogleAuth.onGetAuthToken(this.ws.auth)
   }
@@ -62,6 +62,9 @@ class App extends Component {
         config={this.state.config}
         displayName={this.state.authDisplayName}
         onConfigChange={this.syncConfigToServer}
+        host={HOST}
+        port={PORT}
+        room={ROOM}
       />
     )
   }

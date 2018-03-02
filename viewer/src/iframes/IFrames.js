@@ -16,7 +16,7 @@ function Avatar(props) {
 
 function IFrame(props) {
   return (
-    <div className={props.className}>
+    <div className={props.className + (props.config.isFeatured ? " featured" : "")}>
       <iframe src={props.config.link ? props.config.link : "http://iframe.coolkev.com/start.html"} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen/>
       <Avatar subject={props.config.who}/>
     </div>

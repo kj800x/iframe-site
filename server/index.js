@@ -124,6 +124,7 @@ function updateWhosInConfig(newConfig, oldConfig, who) {
         }
       }
     }
+    out[PARTS[i]].isFeatured = newConfig[PARTS[i]].isFeatured;
   }
   return out;
 }

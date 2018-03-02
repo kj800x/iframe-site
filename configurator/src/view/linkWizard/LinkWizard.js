@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import FEATURED_LINKS from './constants/featuredLinks';
 import buildYoutubeLoopedVideoUrl from "./util/buildYoutubeLoopedVideoUrl";
 import buildYoutubeLivestreamUrl from "./util/buildYoutubeLivestreamUrl";
+import buildRoomInRoomUrl from "./util/buildRoomInRoomUrl";
 
 export default class LinkWizard extends Component {
   constructor(props) {
@@ -10,12 +11,15 @@ export default class LinkWizard extends Component {
     this.state = {
       "livestreamVideoId": "",
       "loopedVideoId": "",
+      "roomInRoomRoom": "",
     };
     this.createFeaturedLinkHandler = this.createFeaturedLinkHandler.bind(this);
     this.setLoopedVideoId = this.setLoopedVideoId.bind(this);
     this.setLivestreamVideoId = this.setLivestreamVideoId.bind(this);
+    this.setRoomInRoomRoom = this.setRoomInRoomRoom.bind(this);
     this.setLinkToLivestream = this.setLinkToLivestream.bind(this);
     this.setLinkToLoopedVideo = this.setLinkToLoopedVideo.bind(this);
+    this.setLinkToRoomInRoom = this.setLinkToRoomInRoom.bind(this);
   }
 
   createFeaturedLinkHandler(value) {
@@ -36,12 +40,22 @@ export default class LinkWizard extends Component {
     })
   }
 
+  setRoomInRoomRoom(event) {
+    this.setState({
+      "roomInRoomRoom": event.target.value,
+    })
+  }
+
   setLinkToLivestream() {
     this.props.onDone(buildYoutubeLivestreamUrl(this.state.livestreamVideoId))
   }
 
   setLinkToLoopedVideo() {
     this.props.onDone(buildYoutubeLoopedVideoUrl(this.state.loopedVideoId))
+  }
+
+  setLinkToRoomInRoom() {
+    this.props.onDone(buildRoomInRoomUrl(this.state.roomInRoomRoom))
   }
 
   renderFeaturedLinks() {
@@ -72,6 +86,16 @@ export default class LinkWizard extends Component {
     )
   }
 
+  renderRoomInRoomPrompt() {
+    return (
+      <div>
+        Room: <input value={this.state.roomInRoomRoom} onChange={this.setRoomInRoomRoom} />
+        <button onClick={this.setLinkToRoomInRoom}>Go</button>
+        <br />(manage by loading the config page with <code>?room={this.state.roomInRoomRoom}</code>)
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
@@ -84,6 +108,10 @@ export default class LinkWizard extends Component {
           <h3>Custom YouTube</h3>
           {this.renderYoutubeLivestreamPrompt()}
           {this.renderYoutubeVideoPrompt()}
+        </div>
+        <div>
+          <h3>Room in Room (nested iframe page)</h3>
+          {this.renderRoomInRoomPrompt()}
         </div>
         <button onClick={this.props.onCancel}>Cancel</button>
       </div>

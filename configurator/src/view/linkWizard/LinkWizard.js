@@ -5,6 +5,8 @@ import buildYoutubeLoopedVideoUrl from "./util/buildYoutubeLoopedVideoUrl";
 import buildYoutubeLivestreamUrl from "./util/buildYoutubeLivestreamUrl";
 import buildRoomInRoomUrl from "./util/buildRoomInRoomUrl";
 
+import "./LinkWizard.css";
+
 export default class LinkWizard extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +14,7 @@ export default class LinkWizard extends Component {
       "livestreamVideoId": "",
       "loopedVideoId": "",
       "roomInRoomRoom": "",
+      "loopedVideoStartAt": "0",
     };
     this.createFeaturedLinkHandler = this.createFeaturedLinkHandler.bind(this);
     this.setLoopedVideoId = this.setLoopedVideoId.bind(this);
@@ -20,6 +23,7 @@ export default class LinkWizard extends Component {
     this.setLinkToLivestream = this.setLinkToLivestream.bind(this);
     this.setLinkToLoopedVideo = this.setLinkToLoopedVideo.bind(this);
     this.setLinkToRoomInRoom = this.setLinkToRoomInRoom.bind(this);
+    this.setLoopedVideoStartAt = this.setLoopedVideoStartAt.bind(this);
   }
 
   createFeaturedLinkHandler(value) {
@@ -46,12 +50,18 @@ export default class LinkWizard extends Component {
     })
   }
 
+  setLoopedVideoStartAt(event) {
+    this.setState({
+      "loopedVideoStartAt": event.target.value,
+    })
+  }
+
   setLinkToLivestream() {
     this.props.onDone(buildYoutubeLivestreamUrl(this.state.livestreamVideoId))
   }
 
   setLinkToLoopedVideo() {
-    this.props.onDone(buildYoutubeLoopedVideoUrl(this.state.loopedVideoId))
+    this.props.onDone(buildYoutubeLoopedVideoUrl(this.state.loopedVideoId, this.state.loopedVideoStartAt))
   }
 
   setLinkToRoomInRoom() {
@@ -71,7 +81,7 @@ export default class LinkWizard extends Component {
   renderYoutubeLivestreamPrompt() {
     return (
       <div>
-        YouTube Livestream Video ID: <input value={this.state.livestreamVideoId} onChange={this.setLivestreamVideoId} />
+        YouTube Livestream Video ID: <input value={this.state.livestreamVideoId} onChange={this.setLivestreamVideoId}/>
         <button onClick={this.setLinkToLivestream}>Go</button>
       </div>
     )
@@ -80,8 +90,9 @@ export default class LinkWizard extends Component {
   renderYoutubeVideoPrompt() {
     return (
       <div>
-        YouTube Looped Video ID: <input value={this.state.loopedVideoId} onChange={this.setLoopedVideoId} />
-        <button onClick={this.setLinkToLoopedVideo}>Go</button>
+        YouTube Looped Video ID: <input value={this.state.loopedVideoId} onChange={this.setLoopedVideoId}/> start
+        at <input className="time" value={this.state.loopedVideoStartAt} onChange={this.setLoopedVideoStartAt}/> sec <button
+        onClick={this.setLinkToLoopedVideo}>Go</button>
       </div>
     )
   }
@@ -89,9 +100,9 @@ export default class LinkWizard extends Component {
   renderRoomInRoomPrompt() {
     return (
       <div>
-        Room: <input value={this.state.roomInRoomRoom} onChange={this.setRoomInRoomRoom} />
+        Room: <input value={this.state.roomInRoomRoom} onChange={this.setRoomInRoomRoom}/>
         <button onClick={this.setLinkToRoomInRoom}>Go</button>
-        <br />(manage by loading the config page with <code>?room={this.state.roomInRoomRoom}</code>)
+        <br/>(manage by loading the config page with <code>?room={this.state.roomInRoomRoom}</code>)
       </div>
     )
   }

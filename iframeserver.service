@@ -1,0 +1,14 @@
+[Unit]
+Description=IFrame Site WS Server
+
+[Service]
+WorkingDirectory=/srv/iframe-site/server
+ExecStart=/usr/bin/node /srv/iframe-site/server/index.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=iframe_server
+User=iframesite
+ 
+[Install]
+WantedBy=multi-user.target

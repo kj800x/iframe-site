@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lowdb": "^1.0.0",
+    "nosql": "^6.1.0",
     "request": "^2.83.0",
     "ws": "^4.1.0"
   }

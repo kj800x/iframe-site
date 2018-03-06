@@ -1,6 +1,12 @@
 const WebSocket = require('ws');
 const request = require('request');
 
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+
+const adapter = new FileSync('db.json');
+const DB = low(adapter);
+
 const JOIN_ROOM = "JOIN_ROOM";
 const SET_ROOM_CONFIG = "SET_ROOM_CONFIG";
 const PORT = 10050;
@@ -63,12 +69,23 @@ const wss = new WebSocket.Server({port: PORT});
 
 const rooms = {};
 
-function ensureRoom(room) {
+function ensureRoom(connection, room) {
   if (rooms[room] === undefined) {
-    rooms[room] = {
-      config: ROOM_DEFAULT_CONFIG,
-      members: [],
-    };
+    const dbRoom = DB.get(room).value();
+    console.log(dbRoom);
+    if (dbRoom) {
+      log(connection, "Restoring room from database");
+      rooms[room] = {
+        config: dbRoom,
+        members: [],
+      };
+    } else {
+      log(connection, "Creating a fresh room");
+      rooms[room] = {
+        config: ROOM_DEFAULT_CONFIG,
+        members: [],
+      };
+    }
   }
 }
 
@@ -97,7 +114,7 @@ function leaveCurrentRoom(connection) {
 }
 
 function joinRoom(connection, room) {
-  ensureRoom(room);
+  ensureRoom(connection, room);
   rooms[room].members.push(connection);
   connection.room = room;
   sendToConnection(connection, {
@@ -130,8 +147,9 @@ function updateWhosInConfig(newConfig, oldConfig, who) {
 }
 
 function setRoomConfig(room, config, connection) {
-  ensureRoom(room);
+  ensureRoom(connection, room);
   rooms[room].config = updateWhosInConfig(config, rooms[room].config, connection);
+  DB.set(room, rooms[room].config).write();
   broadcastToAllInRoom(room, connection, {
     "type": "CONFIG_CHANGE",
     "config": rooms[room].config,

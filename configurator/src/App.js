@@ -18,6 +18,12 @@ class App extends Component {
     this.handleAuthChange = this.handleAuthChange.bind(this);
     this.syncConfigFromServer = this.syncConfigFromServer.bind(this);
     this.syncConfigToServer = this.syncConfigToServer.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleClose() {
+    AlertStore.createAlert(`The websocket connection has been lost!`);
+    setTimeout(this.ws.connect.bind(this.ws, HOST, PORT, ROOM), 7500);
   }
 
   componentDidMount() {
@@ -25,6 +31,7 @@ class App extends Component {
     this.ws.onConfigChange(this.syncConfigFromServer);
     this.ws.onAuthChange(this.handleAuthChange);
     this.ws.connect(HOST, PORT, ROOM);
+    this.ws.onClose(this.handleClose);
     GoogleAuth.init();
     GoogleAuth.onGetAuthToken(this.ws.auth)
   }

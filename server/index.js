@@ -72,7 +72,6 @@ const rooms = {};
 function ensureRoom(connection, room) {
   if (rooms[room] === undefined) {
     const dbRoom = DB.get(room).value();
-    console.log(dbRoom);
     if (dbRoom) {
       log(connection, "Restoring room from database");
       rooms[room] = {
@@ -107,7 +106,7 @@ function leaveCurrentRoom(connection) {
   if (!connection.room) {
     return;
   }
-  ensureRoom(connection.room);
+  ensureRoom(connection, connection.room);
   log(connection, `Left room ${connection.room}`);
   rooms[connection.room].members.splice(rooms[connection.room].members.indexOf(connection), 1);
   connection.room = null;

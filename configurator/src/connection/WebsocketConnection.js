@@ -7,6 +7,8 @@ export default class WebsocketConnection {
   constructor() {
     this.configChangeListeners = [];
     this.authChangeListeners = [];
+    this.onCloseListeners = [];
+    this.token = null;
     this.auth = this.auth.bind(this);
   }
 
@@ -18,14 +20,26 @@ export default class WebsocketConnection {
     this.onConfigChange = this.onConfigChange.bind(this);
     this.onMessage = this.onMessage.bind(this);
     this.onOpen = this.onOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.auth = this.auth.bind(this);
 
     this.ws = new WebSocket(address);
     this.ws.onopen = this.onOpen;
+    this.ws.onclose = this.handleClose;
     this.ws.onmessage = this.onMessage;
   }
 
   onOpen() {
     this.ws.send(JSON.stringify(JoinRoomMessage(this.room)));
+    if (this.token) {
+      this.ws.send(JSON.stringify(AuthenticateMessage(this.token)))
+    }
+  }
+
+  handleClose() {
+    for (let i = 0; i < this.onCloseListeners.length; i++) {
+      this.onCloseListeners[i]();
+    }
   }
 
   onMessage(rawMessage) {
@@ -47,7 +61,12 @@ export default class WebsocketConnection {
   }
 
   auth(token) {
+    this.token = token;
     this.ws.send(JSON.stringify(AuthenticateMessage(token)))
+  }
+
+  onClose(handler) {
+    this.onCloseListeners.push(handler);
   }
 
   onAuthChange(handler) {

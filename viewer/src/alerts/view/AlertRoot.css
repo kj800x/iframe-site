@@ -1,0 +1,19 @@
+.alertContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  pointer-events: none;
+  z-index: 10000;
+}
+
+.alert {
+  margin: 10px auto;
+  width: 80%;
+  background: #f8a9ad;
+  border: 1px solid #d94c53;
+  border-radius: 10px;
+  pointer-events: auto;
+  z-index: 10000;
+}

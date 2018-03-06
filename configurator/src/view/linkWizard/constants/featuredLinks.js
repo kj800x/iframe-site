@@ -5,19 +5,19 @@ export default [
   },
   {
     "name": "Penguin Beach",
-    "link": "https://www.youtube.com/embed/pqDhApnZHFo?autoplay=1&mute=1"
+    "link": "https://www.youtube.com/embed/7KNtw3yylQA?autoplay=1&mute=1"
   },
   {
-    "name": "Penguin Underwater",
-    "link": "https://www.youtube.com/embed/Ldq1KXcIE1c?autoplay=1&mute=1"
+    "name": "Penguin Underwater (Highlights)",
+    "link": "https://www.youtube.com/embed/y6TmFxcVrnI?autoplay=1&mute=1"
   },
   {
-    "name": "Tire Swing (Buffering) Panda",
-    "link": "https://www.youtube.com/embed/tio13lc4Bx8?autoplay=1&mute=1"
+    "name": "Tire Swing (Buffering) Panda (Highlights)",
+    "link": "https://www.youtube.com/embed/_eM0tWVynnQ?autoplay=1&mute=1"
   },
   {
-    "name": "Other Panda",
-    "link": "https://www.youtube.com/embed/Ahp0gQwxFYE?autoplay=1&mute=1"
+    "name": "Other Panda (Highlights)",
+    "link": "https://www.youtube.com/embed/EeoRbRohRNQ?autoplay=1&mute=1"
   },
   {
     "name": "Tour de France Highlights 2017",

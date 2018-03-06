@@ -8,7 +8,7 @@ function Avatar(props) {
 
   return (
     <div className="avatar">
-      {!isDefaultProfile && <img className="profile" src={props.subject.picture}/>}
+      {!isDefaultProfile && <img alt="profile" className="profile" src={props.subject.picture}/>}
       {isDefaultProfile  && <span className="name">{props.subject.name}</span>}
     </div>
   )
@@ -17,7 +17,7 @@ function Avatar(props) {
 function IFrame(props) {
   return (
     <div className={props.className + (props.config.isFeatured ? " featured" : "")}>
-      <iframe src={props.config.link ? props.config.link : "http://iframe.coolkev.com/start.html"} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen/>
+      <iframe title={props.className.replace(/ /g, "")} src={props.config.link ? props.config.link : "http://iframe.coolkev.com/start.html"} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen/>
       <Avatar subject={props.config.who}/>
     </div>
   )

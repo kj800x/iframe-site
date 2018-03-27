@@ -4,6 +4,8 @@ import FEATURED_LINKS from './constants/featuredLinks';
 import buildYoutubeLoopedVideoUrl from "./util/buildYoutubeLoopedVideoUrl";
 import buildYoutubeLivestreamUrl from "./util/buildYoutubeLivestreamUrl";
 import buildRoomInRoomUrl from "./util/buildRoomInRoomUrl";
+import buildTiledEmojiUrl from './util/buildTiledEmojiUrl';
+import buildScaledUrl from './util/buildScaledUrl';
 
 import "./LinkWizard.css";
 
@@ -15,14 +17,22 @@ export default class LinkWizard extends Component {
       "loopedVideoId": "",
       "roomInRoomRoom": "",
       "loopedVideoStartAt": "0",
+      "tiledEmojiValue": "",
+      "scaledUrl": props.oldUrl,
+      "scaleFactor": "1",
     };
     this.createFeaturedLinkHandler = this.createFeaturedLinkHandler.bind(this);
     this.setLoopedVideoId = this.setLoopedVideoId.bind(this);
     this.setLivestreamVideoId = this.setLivestreamVideoId.bind(this);
     this.setRoomInRoomRoom = this.setRoomInRoomRoom.bind(this);
+    this.setTiledEmojiValue = this.setTiledEmojiValue.bind(this);
+    this.setScaleFactor = this.setScaleFactor.bind(this);
+    this.setScaledUrl = this.setScaledUrl.bind(this);
     this.setLinkToLivestream = this.setLinkToLivestream.bind(this);
     this.setLinkToLoopedVideo = this.setLinkToLoopedVideo.bind(this);
     this.setLinkToRoomInRoom = this.setLinkToRoomInRoom.bind(this);
+    this.setLinkToTiledEmoji = this.setLinkToTiledEmoji.bind(this);
+    this.setLinkToScaledUrl = this.setLinkToScaledUrl.bind(this);
     this.setLoopedVideoStartAt = this.setLoopedVideoStartAt.bind(this);
   }
 
@@ -56,6 +66,24 @@ export default class LinkWizard extends Component {
     })
   }
 
+  setTiledEmojiValue(event) {
+    this.setState({
+      "tiledEmojiValue": event.target.value,
+    })
+  }
+
+  setScaledUrl(event) {
+    this.setState({
+      "scaledUrl": event.target.value,
+    })
+  }
+
+  setScaleFactor(event) {
+    this.setState({
+      "scaleFactor": event.target.value,
+    })
+  }
+
   setLinkToLivestream() {
     this.props.onDone(buildYoutubeLivestreamUrl(this.state.livestreamVideoId))
   }
@@ -68,14 +96,41 @@ export default class LinkWizard extends Component {
     this.props.onDone(buildRoomInRoomUrl(this.state.roomInRoomRoom))
   }
 
+  setLinkToTiledEmoji() {
+    this.props.onDone(buildTiledEmojiUrl(this.state.tiledEmojiValue));
+  }
+
+  setLinkToScaledUrl() {
+    this.props.onDone(buildScaledUrl(this.state.scaledUrl, this.state.scaleFactor));
+  }
+
   renderFeaturedLinks() {
     return FEATURED_LINKS.map((featuredLink) => {
       return (
-        <div key={featuredLink.link}>
+        <div key={featuredLink.link} style={{"margin-right": "10px", "display": "inline"}}>
           <button onClick={this.createFeaturedLinkHandler(featuredLink.link)}>{featuredLink.name}</button>
         </div>
       )
     });
+  }
+
+  renderTiledEmojiPrompt() {
+    return (
+      <div>
+        Tiled Emoji: <input value={this.state.tiledEmojiValue} onChange={this.setTiledEmojiValue}/>
+        <button onClick={this.setLinkToTiledEmoji}>Go</button>
+      </div>
+    )
+  }
+
+  renderScaledWebpagePrompt() {
+    return (
+      <div>
+        Scaled URL: <input value={this.state.scaledUrl} onChange={this.setScaledUrl}/> <br />
+        Scale Factor: <input value={this.state.scaleFactor} onChange={this.setScaleFactor}/>
+        <button onClick={this.setLinkToScaledUrl}>Go</button>
+      </div>
+    )
   }
 
   renderYoutubeLivestreamPrompt() {
@@ -121,6 +176,14 @@ export default class LinkWizard extends Component {
           {this.renderYoutubeVideoPrompt()}
         </div>
         <div>
+          <h3>Tiled Emoji</h3>
+          {this.renderTiledEmojiPrompt()}
+        </div>
+        <div>
+          <h3>Scaled Webpage</h3>
+          {this.renderScaledWebpagePrompt()}
+        </div>
+        <div>
           <h3>Room in Room (nested iframe page)</h3>
           {this.renderRoomInRoomPrompt()}
         </div>
@@ -130,3 +193,5 @@ export default class LinkWizard extends Component {
   }
 
 }
+
+//http://home.coolkev.com/emoji.html?emoji=butt_holdings

@@ -58,6 +58,7 @@ export default class LinkEditor extends Component {
         <LinkWizard
           onDone={this.handleWizardDone}
           onCancel={this.hideWizard}
+          oldUrl={this.props.value}
         />
       </Modal>
     )

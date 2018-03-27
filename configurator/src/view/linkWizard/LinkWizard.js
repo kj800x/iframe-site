@@ -107,7 +107,7 @@ export default class LinkWizard extends Component {
   renderFeaturedLinks() {
     return FEATURED_LINKS.map((featuredLink) => {
       return (
-        <div key={featuredLink.link} style={{"margin-right": "10px", "display": "inline"}}>
+        <div key={featuredLink.link} style={{"marginRight": "10px", "display": "inline"}}>
           <button onClick={this.createFeaturedLinkHandler(featuredLink.link)}>{featuredLink.name}</button>
         </div>
       )

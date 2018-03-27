@@ -55,36 +55,38 @@ export default class ConfigEditor extends Component {
     return (
       <div>
         <h4> Hello {this.props.displayName} </h4>
-        <h5> Configuring room <b>{this.props.room} @ {this.props.host}:{this.props.port}</b> </h5>
+        <h5> Configuring room <b>{this.props.room} @ {this.props.host}:{this.props.port}</b></h5>
         <table className="LinkEditorTable">
-          <LinkEditor
-            label={"Top Left"}
-            value={this.state.config.tl.link}
-            isFeatured={this.state.config.tl.isFeatured}
-            onChange={this.createLinkUpdater("tl")}
-            onFeaturedChange={this.createFeaturedChange("tl")}
-          />
-          <LinkEditor
-            label={"Top Right"}
-            value={this.state.config.tr.link}
-            isFeatured={this.state.config.tr.isFeatured}
-            onChange={this.createLinkUpdater("tr")}
-            onFeaturedChange={this.createFeaturedChange("tr")}
-          />
-          <LinkEditor
-            label={"Bottom Left"}
-            value={this.state.config.bl.link}
-            isFeatured={this.state.config.bl.isFeatured}
-            onChange={this.createLinkUpdater("bl")}
-            onFeaturedChange={this.createFeaturedChange("bl")}
-          />
-          <LinkEditor
-            label={"Bottom Right"}
-            value={this.state.config.br.link}
-            isFeatured={this.state.config.br.isFeatured}
-            onChange={this.createLinkUpdater("br")}
-            onFeaturedChange={this.createFeaturedChange("br")}
-          />
+          <tbody>
+            <LinkEditor
+              label={"Top Left"}
+              value={this.state.config.tl.link}
+              isFeatured={this.state.config.tl.isFeatured}
+              onChange={this.createLinkUpdater("tl")}
+              onFeaturedChange={this.createFeaturedChange("tl")}
+            />
+            <LinkEditor
+              label={"Top Right"}
+              value={this.state.config.tr.link}
+              isFeatured={this.state.config.tr.isFeatured}
+              onChange={this.createLinkUpdater("tr")}
+              onFeaturedChange={this.createFeaturedChange("tr")}
+            />
+            <LinkEditor
+              label={"Bottom Left"}
+              value={this.state.config.bl.link}
+              isFeatured={this.state.config.bl.isFeatured}
+              onChange={this.createLinkUpdater("bl")}
+              onFeaturedChange={this.createFeaturedChange("bl")}
+            />
+            <LinkEditor
+              label={"Bottom Right"}
+              value={this.state.config.br.link}
+              isFeatured={this.state.config.br.isFeatured}
+              onChange={this.createLinkUpdater("br")}
+              onFeaturedChange={this.createFeaturedChange("br")}
+            />
+          </tbody>
         </table>
         <button className="updateButton" onClick={this.handleUpdate}>Update</button>
       </div>

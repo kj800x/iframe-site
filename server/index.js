@@ -157,6 +157,15 @@ function setRoomConfig(room, config, connection) {
   log(connection, `Set the room config for room ${room} to ${JSON.stringify(rooms[room].config)}`);
 }
 
+function forceRefreshRoom(room, connection) {
+  ensureRoom(connection, room);
+  broadcastToAllInRoom(room, connection, {
+    "type": "FORCE_REFRESH",
+    "who": connection.displayName,
+  });
+  log(connection, `Caused a force refresh for room ${room}`);
+}
+
 function handleMessage(message, connection) {
   if (message.type === "JOIN_ROOM") {
     log(connection, "Received JOIN_ROOM message");
@@ -172,6 +181,13 @@ function handleMessage(message, connection) {
       return;
     }
     setRoomConfig(connection.room, message.config, connection);
+  } else if (message.type === "FORCE_REFRESH") {
+    log(connection, "Received FORCE_REFRESH message");
+    if (!connection.authStatus) {
+      log(connection, "Attempted to FORCE_REFRESH a room without a valid auth");
+      return;
+    }
+    forceRefreshRoom(connection.room, connection);
   } else {
     log(connection, "Received unknown message");
   }

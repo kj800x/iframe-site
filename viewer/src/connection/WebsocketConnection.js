@@ -1,7 +1,7 @@
 import JoinRoomMessage from "./messages/JoinRoomMessage"
 import SetRoomConfigMessage from "./messages/SetRoomConfigMessage"
 import AuthenticateMessage from "./messages/AuthenticateMessage";
-import {CONFIG_CHANGE, AUTH_CHANGE} from "./constants/MessageTypes";
+import {CONFIG_CHANGE, AUTH_CHANGE, FORCE_REFRESH} from "./constants/MessageTypes";
 
 export default class WebsocketConnection {
   constructor() {
@@ -53,6 +53,9 @@ export default class WebsocketConnection {
       for (let i = 0; i < this.authChangeListeners.length; i++) {
         this.authChangeListeners[i](message);
       }
+    }
+    if (message.type === FORCE_REFRESH) {
+      window.location.reload(true)
     }
   }
 

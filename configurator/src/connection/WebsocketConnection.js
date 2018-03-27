@@ -1,6 +1,7 @@
 import JoinRoomMessage from "./messages/JoinRoomMessage"
 import SetRoomConfigMessage from "./messages/SetRoomConfigMessage"
 import AuthenticateMessage from "./messages/AuthenticateMessage";
+import ForceRefreshMessage from "./messages/ForceRefreshMessage";
 import {CONFIG_CHANGE, AUTH_CHANGE} from "./constants/MessageTypes";
 
 export default class WebsocketConnection {
@@ -27,6 +28,10 @@ export default class WebsocketConnection {
     this.ws.onopen = this.onOpen;
     this.ws.onclose = this.handleClose;
     this.ws.onmessage = this.onMessage;
+
+    window.__FORCE_REFRESH__ = function() {
+      this.ws.send(JSON.stringify(ForceRefreshMessage()))
+    }.bind(this);
   }
 
   onOpen() {

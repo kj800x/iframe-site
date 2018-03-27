@@ -6,3 +6,6 @@ export const AUTH = "AUTH";
 // Server => Client
 export const AUTH_CHANGE = "AUTH_CHANGE";
 export const CONFIG_CHANGE = "CONFIG_CHANGE";
+
+// BOTH
+export const FORCE_REFRESH = "FORCE_REFRESH";
